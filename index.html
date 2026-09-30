@@ -26,16 +26,17 @@ h1{margin:5px 0 8px;font-size:32px}.hero p{margin:0;color:#eaf0f3}.chips{display
 .savebar input:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:var(--navy)}
 .savebar .primary{margin:0;white-space:nowrap}.savebar .primary:disabled{opacity:.6;cursor:wait}
 .toast{display:none;text-align:center;font-size:13px;color:#2f7d5a;background:#eef8f2;border:1px solid #cfe8d8;border-radius:10px;padding:8px 12px;margin-top:10px}
+.part{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.06em;padding:10px 4px 0}.part:first-child{padding-top:0}
 button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 </style></head>
 <body><div class="wrap">
 <header class="hero"><div style="font-size:12px;letter-spacing:.15em;opacity:.7">TEAM COMMUNICATION SELF-ASSESSMENT</div>
-<h1>職場溝通風格探索</h1><p>從 20 個工作情境，看見你的主要溝通風格與第二傾向。</p>
-<div class="chips"><span class="chip">20 題</span><span class="chip">約 8–10 分鐘</span><span class="chip">直覺點選 1–4</span><span class="chip">四色比例＋雙主型判斷</span></div></header>
+<h1>職場溝通風格探索</h1><p>從 20 個工作情境加 5 題自我描述，看見你的主要溝通風格、第二傾向與傾向強度。</p>
+<div class="chips"><span class="chip">25 題</span><span class="chip">約 10–12 分鐘</span><span class="chip">直覺點選 1–4</span><span class="chip">四色偏好指數＋傾向強度判讀</span></div></header>
 <section class="box"><b>怎麼填才比較準？</b><p>每題四個做法都合理。每個選項直接點選 <b>4＝最像我、3＝滿像我、2＝比較不像、1＝最不像</b>。同一題的 1～4 各使用一次；想改答案時直接點新的分數，若分數已被使用會自動交換。</p>
 <div class="notice"><b>回答「真實的你」，不是「一個專業 BA 應該怎麼做」。</b><br>如果很難選，想像時間很趕、沒有人提醒你的時候，你第一直覺通常怎麼反應。</div>
 <p class="small">此工具依課程四色溝通框架設計，用於團隊自我覺察與討論，並非經標準化常模驗證的心理量表。</p></section>
-<div class="sticky"><div class="prow"><span>完成進度</span><span id="pt">0 / 20</span></div><div class="track"><div class="fill" id="pf"></div></div></div>
+<div class="sticky"><div class="prow"><span>完成進度</span><span id="pt">0 / 25</span></div><div class="track"><div class="fill" id="pf"></div></div></div>
 <div id="questions"></div>
 <div class="actions"><button class="primary" onclick="calc()">查看我的四色結果</button><button class="secondary" onclick="resetAll()">重新作答</button></div>
 <section class="result" id="result"><div class="center"><div class="small">YOUR RESULT</div><h2 id="headline"></h2><p id="summary"></p></div><div class="scores" id="scores"></div><div class="savebar"><input id="who" type="text" maxlength="20" placeholder="你的名字（選填，會印在圖片上）" autocomplete="name"><button type="button" class="primary" id="saveBtn" onclick="saveResult()">儲存結果圖片</button></div><div class="toast" id="toast" role="status"></div><div class="clarity" id="clarity"></div><div class="resultGrid" id="details"></div><div class="panel" style="margin-top:18px"><h3>🎨 各色溝通 Tips｜遇到不同風格的人，可以怎麼說？</h3>
@@ -46,7 +47,7 @@ button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 <div style="border:1px solid #ead889;border-radius:14px;padding:16px"><h3 style="margin-top:0">🟡 秩序型｜把安排講清楚</h3><p><b>他在意：</b>流程、責任、時間、標準</p><p><b>怎麼說：</b>把誰做、做什麼、何時完成，以及有沒有變更講清楚。</p><p><b>可以這樣講：</b>「這次由我確認需求，你負責跟進，週三前完成；有變更我會同步。」</p><p><b>避免：</b>臨時改來改去、責任不清，只說「先做再說」。</p></div>
 <div style="border:1px solid #b9dfc6;border-radius:14px;padding:16px"><h3 style="margin-top:0">🟢 分析型｜給原因和依據</h3><p><b>他在意：</b>原因、資料、邏輯、風險</p><p><b>怎麼說：</b>說明為什麼、依據是什麼，也留一點時間讓他判斷。</p><p><b>可以這樣講：</b>「目前資料顯示問題主要在這裡，兩個方案的差異是這些，我們可以一起比較。」</p><p><b>避免：</b>催著立刻回答、只有感覺沒有依據，或資訊前後矛盾。</p></div>
 </div>
-<p style="margin-top:16px"><b>💡 主＋副怎麼用？</b>先用對方的主要傾向開場，再補第二傾向需要的資訊。例如「🟠＋🟢」可以先講結論與下一步，再補資料與判斷依據。</p></div><p class="small center">百分比代表四種反應風格在本次作答中的相對分布，不代表人格的絕對百分比。</p></section>
+<p style="margin-top:16px"><b>💡 主＋副怎麼用？</b>先用對方的主要傾向開場，再補第二傾向需要的資訊。例如「🟠＋🟢」可以先講結論與下一步，再補資料與判斷依據。</p></div><p class="small center">偏好指數代表你在本次作答中對各風格的相對偏好，不代表人格的絕對數值。</p></section>
 </div>
 <script>
 const C={
@@ -54,10 +55,10 @@ O:{name:"橘色",emo:"🟠",color:"#ed8b2c",title:"行動／結果",desc:"偏好
 B:{name:"藍色",emo:"🔵",color:"#4385d1",title:"關係／感受",desc:"自然注意人的感受、合作氣氛與彼此接受度。",talk:"先建立理解與信任，再談要求；語氣與互動方式很重要。",risk:"壓力下可能為避免衝突，而延後表達真正的不同意。"},
 Y:{name:"金色",emo:"🟡",color:"#d4aa2c",title:"秩序／責任",desc:"重視流程、承諾、責任邊界與可預期性。",talk:"把流程、時程、責任人、標準與例外講清楚。",risk:"壓力下可能更依賴規則與掌控，對臨時變更較不舒服。"},
 G:{name:"綠色",emo:"🟢",color:"#3a9b70",title:"分析／邏輯",desc:"傾向先理解原因、驗證資訊與風險，再做判斷。",talk:"提供背景、數據、限制與判斷依據，並留一點思考時間。",risk:"壓力下可能增加分析與確認，讓需要快速決策的人覺得節奏慢。"}};
-const Q=[["突然收到一件要求今天完成的插單，你第一個反應通常是？",[["先動起來，最重要的先做，其他事情邊做邊調整。","O"],["先跟會被影響的人說一聲，看看大家怎麼配合比較順。","B"],["先確認這件事誰決定要優先，以及原本的工作要怎麼重新安排。","Y"],["先弄清楚為什麼這麼急、不做會怎樣，再決定怎麼處理。","G"]]],["會議討論很久還是沒有結論，你最容易先做哪件事？",[["直接整理出幾個選擇，推大家趕快決定一個。","O"],["先看看是不是有人有顧慮，只是一直沒說出來。","B"],["把還沒決定的事情列清楚，確認誰負責、何時處理。","Y"],["先找出大家卡住的真正原因，是缺資料還是想法不同。","G"]]],["同事只回你一句「這個做不了」，你第一個念頭比較像？",[["那就先找別的方法，不要讓事情卡在這裡。","O"],["他是不是遇到什麼困難？先了解一下他的狀況。","B"],["是哪個規定或條件不符合？先確認正確的處理方式。","Y"],["為什麼做不了？我想先知道具體原因。","G"]]],["主管突然問你專案現在怎麼樣，你通常會怎麼回？",[["先講結論：現在到哪、卡在哪、需要他決定什麼。","O"],["除了進度，也會提一下目前合作狀況，有沒有人需要協助。","B"],["照順序講清楚：完成了什麼、正在做什麼、接下來做什麼、何時完成。","Y"],["除了進度，也會說明為什麼會變成現在這樣，並補上相關資料。","G"]]],["有人提出一個有風險、但可能有效的新做法，你比較傾向？",[["先小範圍試試看，實際跑過再決定要不要繼續。","O"],["先聽聽大家的想法，尤其是會被這個改動影響的人。","B"],["先確認誰負責、怎麼執行，以及有沒有既有規定要遵守。","Y"],["先弄清楚它為什麼可能有效、失敗會怎樣，再判斷值不值得試。","G"]]],["你必須拒絕另一個部門的需求時，你最在意哪件事？",[["不要只說不行，最好馬上給對方另一個可以走的方案。","O"],["讓對方知道我不是故意刁難，也希望合作關係不要因此變差。","B"],["這次的處理要跟原本的規定一致，不能每次標準都不同。","Y"],["拒絕的原因要說得通，對方繼續問時我也能清楚解釋。","G"]]],["接手一個完全沒有 SOP 的新工作，你通常會先？",[["先做起來，做出第一版後再慢慢修。","O"],["先找做過的人聊聊，順便建立關係，之後有問題好開口。","B"],["先把基本步驟和檢查方式整理出來，再照著做。","Y"],["先把目前知道和不知道的事情整理清楚，再開始。","G"]]],["組員第二次漏追案件，你第一步比較可能是？",[["先把這次漏掉的案件補起來，別讓問題繼續擴大。","O"],["私下問他最近是不是太忙，或遇到什麼困難。","B"],["重新跟他確認追蹤方式、提醒時間和他要負責的部分。","Y"],["把兩次狀況放在一起看，先找出為什麼會重複漏掉。","G"]]],["你在主持跨部門會議時，最希望會議最後做到什麼？",[["一定要有明確結論，知道接下來要做什麼。","O"],["大家真的把顧慮說出來，不要表面答應、私下不認同。","B"],["誰要做什麼、什麼時候完成，都要記清楚。","Y"],["大家對資料和問題的理解一致，不要各講各的。","G"]]],["別人當場挑戰你的方案，你最自然的反應比較像？",[["只要他的做法能更快往下走，換掉原方案也沒關係。","O"],["先讓他把話說完，也留意現場氣氛，不讓討論變成對立。","B"],["先確認換方案會不會影響原本答應的時程和分工。","Y"],["請他說明理由，我想比較兩邊的依據再判斷。","G"]]],["專案時間突然只剩原本的一半，你第一個調整方向是？",[["先砍掉比較不重要的，最重要的內容先交出去。","O"],["先跟相關的人談，確認大家現在能負荷到什麼程度。","B"],["重新排好每個階段的工作、負責人和交付時間。","Y"],["先確認哪些檢查不能省，以及縮短時間會增加哪些風險。","G"]]],["有人丟給你一大堆資訊，但一直沒有講重點，你通常會？",[["直接問他：「所以現在要我決定或處理什麼？」","O"],["先聽他講完，感覺一下他是不是在擔心什麼。","B"],["請他把事情整理成幾個待辦，寫清楚誰處理、何時完成。","Y"],["先把資訊重新整理，找出事情的前因後果和缺少的資料。","G"]]],["公司通知明天開始改用新流程，你第一個會關心什麼？",[["明天怎麼最快開始用，先跑起來再說。","O"],["哪些人會受影響？大家是不是都知道要改了？","B"],["新流程何時生效、舊流程何時停、之後誰負責什麼。","Y"],["為什麼要改？新流程到底解決了什麼問題？","G"]]],["客戶只說「我希望這個功能更自動一點」，你通常會先？",[["直接給兩三個做法和各自的取捨，讓客戶挑一個。","O"],["先問他現在用起來哪裡最麻煩，了解他的困擾。","B"],["把目前操作步驟列出來，一步一步確認他想省掉哪幾步。","Y"],["先問他心中的「自動」是什麼意思，跟現在差在哪裡。","G"]]],["兩個部門已經有點吵起來，但事情今天還是得往下走，你比較會？",[["先把今天一定要決定的事情處理掉，其他爭議之後再談。","O"],["先讓雙方把不舒服的地方說開，至少願意繼續合作。","B"],["把爭議和工作拆開，重新確認誰做什麼、先做哪一件。","Y"],["先找出雙方到底是哪個資訊或理解不同，才會一直吵不攏。","G"]]],["你把一件重要工作交給別人時，最習慣怎麼交代？",[["說清楚我要的結果和期限，做法讓對方自己發揮。","O"],["先確認他目前忙不忙、是否理解，也告訴他有問題可以找我。","B"],["把步驟、完成標準、期限和什麼時候回報都說清楚。","Y"],["先說明為什麼要做和有哪些限制，讓他遇到狀況能自己判斷。","G"]]],["只剩 10 分鐘準備一場重要討論，你最可能先準備什麼？",[["先想好我要談出的結果、底線，以及可以接受哪些方案。","O"],["先想對方最在意什麼、可能會擔心什麼。","B"],["先列出等等一定要談的項目，以及會後要確認哪些事情。","Y"],["先抓最重要的資料、可能被問的問題和風險。","G"]]],["同事做事比較慢，但品質很好，你比較可能怎麼處理？",[["請他先交一個能用的版本，不用一開始就做到最完整。","O"],["先了解他的工作習慣，再一起找雙方都舒服的節奏。","B"],["跟他約幾個中間時間點看進度，避免最後才發現來不及。","Y"],["先看多花的時間是不是真的換來更好的品質，再決定。","G"]]],["你想說服別人接受你的方案時，最自然會強調什麼？",[["這樣做能得到什麼結果、省多少時間，以及現在怎麼開始。","O"],["大家共同想達成什麼，以及這個方案怎麼回應對方的顧慮。","B"],["實際怎麼執行、誰負責，以及後續怎麼追蹤。","Y"],["相關資料、實際案例，以及為什麼這個方案比較合理。","G"]]],["工作壓力很大時，你最容易出現哪種狀態？",[["只想先把事情做完，能省的討論就先省。","O"],["會更想找人聊一下，確認大家都還撐得住。","B"],["會先把待辦全部列出來，逐一排定順序。","Y"],["會先停下來釐清原因，不急著給答案。","G"]]]];
+const Q=[["突然收到一件要求今天完成的插單，你第一個反應通常是？",[["先動起來，最重要的先做，其他事情邊做邊調整。","O"],["先跟會被影響的人說一聲，看看大家怎麼配合比較順。","B"],["先確認這件事誰決定要優先，以及原本的工作要怎麼重新安排。","Y"],["先弄清楚為什麼這麼急、不做會怎樣，再決定怎麼處理。","G"]]],["會議討論很久還是沒有結論，你最容易先做哪件事？",[["直接整理出幾個選擇，推大家趕快決定一個。","O"],["先看看是不是有人有顧慮，只是一直沒說出來。","B"],["把還沒決定的事情列清楚，確認誰負責、何時處理。","Y"],["先找出大家卡住的真正原因，是缺資料還是想法不同。","G"]]],["同事只回你一句「這個做不了」，你第一個念頭比較像？",[["那就先找別的方法，不要讓事情卡在這裡。","O"],["他是不是遇到什麼困難？先了解一下他的狀況。","B"],["是哪個規定或條件不符合？先確認正確的處理方式。","Y"],["為什麼做不了？我想先知道具體原因。","G"]]],["主管突然問你專案現在怎麼樣，你通常會怎麼回？",[["先講結論：現在到哪、卡在哪、需要他決定什麼。","O"],["除了進度，也會提一下目前合作狀況，有沒有人需要協助。","B"],["照順序講清楚：完成了什麼、正在做什麼、接下來做什麼、何時完成。","Y"],["除了進度，也會說明為什麼會變成現在這樣，並補上相關資料。","G"]]],["有人提出一個有風險、但可能有效的新做法，你比較傾向？",[["先小範圍試試看，實際跑過再決定要不要繼續。","O"],["先聽聽大家的想法，尤其是會被這個改動影響的人。","B"],["先確認誰負責、怎麼執行，以及有沒有既有規定要遵守。","Y"],["先弄清楚它為什麼可能有效、失敗會怎樣，再判斷值不值得試。","G"]]],["你必須拒絕另一個部門的需求時，你最在意哪件事？",[["不要只說不行，最好馬上給對方另一個可以走的方案。","O"],["讓對方知道我不是故意刁難，也希望合作關係不要因此變差。","B"],["這次的處理要跟原本的規定一致，不能每次標準都不同。","Y"],["拒絕的原因要說得通，對方繼續問時我也能清楚解釋。","G"]]],["接手一個完全沒有 SOP 的新工作，你通常會先？",[["先做起來，做出第一版後再慢慢修。","O"],["先找做過的人聊聊，順便建立關係，之後有問題好開口。","B"],["先把基本步驟和檢查方式整理出來，再照著做。","Y"],["先把目前知道和不知道的事情整理清楚，再開始。","G"]]],["組員第二次漏追案件，你第一步比較可能是？",[["先把這次漏掉的案件補起來，別讓問題繼續擴大。","O"],["私下問他最近是不是太忙，或遇到什麼困難。","B"],["重新跟他確認追蹤方式、提醒時間和他要負責的部分。","Y"],["把兩次狀況放在一起看，先找出為什麼會重複漏掉。","G"]]],["你在主持跨部門會議時，最希望會議最後做到什麼？",[["一定要有明確結論，知道接下來要做什麼。","O"],["大家真的把顧慮說出來，不要表面答應、私下不認同。","B"],["誰要做什麼、什麼時候完成，都要記清楚。","Y"],["大家對資料和問題的理解一致，不要各講各的。","G"]]],["別人當場挑戰你的方案，你最自然的反應比較像？",[["只要他的做法能更快往下走，換掉原方案也沒關係。","O"],["先讓他把話說完，也留意現場氣氛，不讓討論變成對立。","B"],["先確認換方案會不會影響原本答應的時程和分工。","Y"],["請他說明理由，我想比較兩邊的依據再判斷。","G"]]],["專案時間突然只剩原本的一半，你第一個調整方向是？",[["先砍掉比較不重要的，最重要的內容先交出去。","O"],["先跟相關的人談，確認大家現在能負荷到什麼程度。","B"],["重新排好每個階段的工作、負責人和交付時間。","Y"],["先確認哪些檢查不能省，以及縮短時間會增加哪些風險。","G"]]],["有人丟給你一大堆資訊，但一直沒有講重點，你通常會？",[["直接問他：「所以現在要我決定或處理什麼？」","O"],["先聽他講完，感覺一下他是不是在擔心什麼。","B"],["請他把事情整理成幾個待辦，寫清楚誰處理、何時完成。","Y"],["先把資訊重新整理，找出事情的前因後果和缺少的資料。","G"]]],["公司通知明天開始改用新流程，你第一個會關心什麼？",[["明天怎麼最快開始用，先跑起來再說。","O"],["哪些人會受影響？大家是不是都知道要改了？","B"],["新流程何時生效、舊流程何時停、之後誰負責什麼。","Y"],["為什麼要改？新流程到底解決了什麼問題？","G"]]],["客戶只說「我希望這個功能更自動一點」，你通常會先？",[["直接給兩三個做法和各自的取捨，讓客戶挑一個。","O"],["先問他現在用起來哪裡最麻煩，了解他的困擾。","B"],["把目前操作步驟列出來，一步一步確認他想省掉哪幾步。","Y"],["先問他心中的「自動」是什麼意思，跟現在差在哪裡。","G"]]],["兩個部門已經有點吵起來，但事情今天還是得往下走，你比較會？",[["先把今天一定要決定的事情處理掉，其他爭議之後再談。","O"],["先讓雙方把不舒服的地方說開，至少願意繼續合作。","B"],["把爭議和工作拆開，重新確認誰做什麼、先做哪一件。","Y"],["先找出雙方到底是哪個資訊或理解不同，才會一直吵不攏。","G"]]],["你把一件重要工作交給別人時，最習慣怎麼交代？",[["說清楚我要的結果和期限，做法讓對方自己發揮。","O"],["先確認他目前忙不忙、是否理解，也告訴他有問題可以找我。","B"],["把步驟、完成標準、期限和什麼時候回報都說清楚。","Y"],["先說明為什麼要做和有哪些限制，讓他遇到狀況能自己判斷。","G"]]],["只剩 10 分鐘準備一場重要討論，你最可能先準備什麼？",[["先想好我要談出的結果、底線，以及可以接受哪些方案。","O"],["先想對方最在意什麼、可能會擔心什麼。","B"],["先列出等等一定要談的項目，以及會後要確認哪些事情。","Y"],["先抓最重要的資料、可能被問的問題和風險。","G"]]],["同事做事比較慢，但品質很好，你比較可能怎麼處理？",[["請他先交一個能用的版本，不用一開始就做到最完整。","O"],["先了解他的工作習慣，再一起找雙方都舒服的節奏。","B"],["跟他約幾個中間時間點看進度，避免最後才發現來不及。","Y"],["先看多花的時間是不是真的換來更好的品質，再決定。","G"]]],["你想說服別人接受你的方案時，最自然會強調什麼？",[["這樣做能得到什麼結果、省多少時間，以及現在怎麼開始。","O"],["大家共同想達成什麼，以及這個方案怎麼回應對方的顧慮。","B"],["實際怎麼執行、誰負責，以及後續怎麼追蹤。","Y"],["相關資料、實際案例，以及為什麼這個方案比較合理。","G"]]],["工作壓力很大時，你最容易出現哪種狀態？",[["只想先把事情做完，能省的討論就先省。","O"],["會更想找人聊一下，確認大家都還撐得住。","B"],["會先把待辦全部列出來，逐一排定順序。","Y"],["會先停下來釐清原因，不急著給答案。","G"]]],["同事最常怎麼形容你？",[["反應快、說做就做，不會拖。","O"],["好相處、會照顧人，有你在氣氛比較好。","B"],["可靠、有條理，交給你就放心。","Y"],["冷靜、想得深，問題會問到點上。","G"]]],["下面哪一句最像你的真心話？",[["一直討論卻不動手，我會很煩。","O"],["氣氛冷冰冰、只講事不講人，我會不舒服。","B"],["說好的事臨時改來改去，我會很受不了。","Y"],["沒有理由就要人照做，我會很難接受。","G"]]],["你覺得自己在團隊裡最大的價值是？",[["讓事情動起來、有結果。","O"],["讓大家願意合作、有話敢說。","B"],["讓事情有秩序、不漏掉。","Y"],["讓決定有依據、少走冤枉路。","G"]]],["回想一天的工作，你最有成就感的是哪種時刻？",[["一件卡很久的事終於推過去了。","O"],["幫到某個人，或化解了一個緊張的場面。","B"],["整天的事都照計畫完成，沒有意外。","Y"],["找出一個別人都沒發現的問題或原因。","G"]]],["做決定的時候，你心裡最常冒出來的問題是？",[["「所以現在可以先做什麼？」","O"],["「大家會怎麼想？會不會有人不舒服？」","B"],["「這樣有沒有照規矩？誰負責？」","Y"],["「為什麼？有沒有依據？」","G"]]]];
 function mix(a,seed){let x=a.slice(),s=seed*7919+17;for(let i=x.length-1;i>0;i--){s=(s*9301+49297)%233280;let j=s%(i+1);[x[i],x[j]]=[x[j],x[i]]}return x}
 const root=document.getElementById("questions");
-Q.forEach((q,i)=>{let d=document.createElement("section");d.className="q";d.id="q"+i;d.innerHTML=`<div class="qt">${i+1}. ${q[0]}</div><div class="sub">直接點數字：1 最不像｜2 比較不像｜3 滿像我｜4 最像我。想改就直接重選，重複分數會自動交換。</div><div class="opts"></div><div class="err">請確認：同一題的 4、3、2、1 各使用一次，而且四個選項都有排序。</div>`;let o=d.querySelector(".opts");mix(q[1],i+3).forEach(x=>{let r=document.createElement("div");r.className="opt";r.innerHTML=`<div>${x[0]}</div><div class="scorepick" data-q="${i}" data-c="${x[1]}" data-v=""><button type="button" class="pick" data-v="1">1<br>最不像</button><button type="button" class="pick" data-v="2">2<br>比較不像</button><button type="button" class="pick" data-v="3">3<br>滿像我</button><button type="button" class="pick" data-v="4">4<br>最像我</button></div>`;o.appendChild(r)});root.appendChild(d)});
+Q.forEach((q,i)=>{if(i===0||i===20){let h=document.createElement("div");h.className="part";h.textContent=i===0?"第一部分｜工作情境（20 題）":"第二部分｜描述你自己（5 題）：沒有標準答案，選最像你的就好";root.appendChild(h)}let d=document.createElement("section");d.className="q";d.id="q"+i;d.innerHTML=`<div class="qt">${i+1}. ${q[0]}</div><div class="sub">直接點數字：1 最不像｜2 比較不像｜3 滿像我｜4 最像我。想改就直接重選，重複分數會自動交換。</div><div class="opts"></div><div class="err">請確認：同一題的 4、3、2、1 各使用一次，而且四個選項都有排序。</div>`;let o=d.querySelector(".opts");mix(q[1],i+3).forEach(x=>{let r=document.createElement("div");r.className="opt";r.innerHTML=`<div>${x[0]}</div><div class="scorepick" data-q="${i}" data-c="${x[1]}" data-v=""><button type="button" class="pick" data-v="1">1<br>最不像</button><button type="button" class="pick" data-v="2">2<br>比較不像</button><button type="button" class="pick" data-v="3">3<br>滿像我</button><button type="button" class="pick" data-v="4">4<br>最像我</button></div>`;o.appendChild(r)});root.appendChild(d)});
 document.querySelectorAll(".pick").forEach(btn=>btn.addEventListener("click",()=>{
  const group=btn.closest(".scorepick"), qi=group.dataset.q, val=btn.dataset.v;
  const groups=[...document.querySelectorAll(`.scorepick[data-q="${qi}"]`)];
@@ -105,20 +106,25 @@ const COMBO={
 "GY":["分析 × 秩序｜想得完整，也做得扎實","你喜歡先弄懂問題，再把解法整理成清楚、可重複執行的方式。對你來說，知道為什麼和知道怎麼做都很重要。","邏輯與細節兼具，適合複雜需求、規格、流程設計、風險分析與品質要求高的工作。","遇到需要先試再說、邊做邊改的情況時，你可能會準備得比實際需要更多，讓啟動速度變慢。","先給你原因、資料與限制，再說明流程和預期結果；不要只告訴你大家都這樣做。"]
 };
 function calc(){for(let i=0;i<Q.length;i++){if(!valid(i,true)){document.getElementById("q"+i).scrollIntoView({behavior:"smooth",block:"center"});return}}
-let sc={O:0,B:0,Y:0,G:0};document.querySelectorAll(".scorepick").forEach(s=>sc[s.dataset.c]+=+s.dataset.v);
-let a=Object.keys(sc).map(k=>({k,v:sc[k],p:sc[k]/200*100})).sort((x,y)=>y.v-x.v),f=a[0],s=a[1],gap=f.v-s.v,c1=C[f.k],c2=C[s.k];
-let type=gap<=4?`${c1.name}＋${c2.name}雙主型`:gap<=8?`${c1.name}為主、${c2.name}明顯次型`:`${c1.name}主導型`;
-document.getElementById("headline").textContent=`${c1.emo} ${type}`;
-document.getElementById("summary").textContent=gap<=4?`前兩色只差 ${gap} 分，你比較像會依情境切換的雙主型，不適合硬分成單一顏色。`:`主要色比第二色高 ${gap} 分，在這次工作情境中呈現較明確的偏好。`;
-let box=document.getElementById("scores");box.innerHTML="";a.forEach(x=>{let c=C[x.k];box.innerHTML+=`<div class="score"><b>${c.emo} ${c.name}</b><div class="pct">${x.p.toFixed(1)}%</div><div class="bar"><i style="width:${x.p}%;background:${c.color}"></i></div><div class="small">${x.v} 分</div></div>`});
-let range=a[0].v-a[3].v,cl=range>=20?"高":range>=11?"中":"低";
-document.getElementById("clarity").innerHTML=`<b>結果辨識度：${cl}</b><br><span class="small">最高色與最低色相差 ${range} 分。差距越大，代表這次作答呈現的偏好越鮮明；差距小則代表四種模式使用較平均。這不是心理計量上的信度係數。</span>`;
-document.getElementById("details").innerHTML=`<div class="panel"><h3>${c1.emo} 主要傾向｜${c1.title}</h3><p>${c1.desc}</p><b>壓力盲點</b><p>${c1.risk}</p></div><div class="panel"><h3>${c2.emo} 第二傾向｜${c2.title}</h3><p>${c2.desc}</p><p class="small">第二傾向會在不同情境下補充你的主要風格，完整互動方式請看下方的主副組合分析。</p></div><div class="panel"><h3>怎麼看百分比？</h3><p>它代表你把全部排序分數中的多少比例分配到該風格。重點看四色相對高低與前兩色差距，而不是把它理解成「人格有幾 %」。</p></div><div class="panel"><h3>你的主副組合｜${COMBO[a[0].k+a[1].k][0]}</h3>
+const n=Q.length,K=n/20;
+const TH={dual:Math.round(3*K),sub:Math.round(7*K),bal:Math.round(13*K)}; // 以 20 題為基準（雙主≤3、主副≤7、均衡≤13），依題數等比換算；25 題→4、9、16
+let sc={O:0,B:0,Y:0,G:0},first={O:0,B:0,Y:0,G:0};document.querySelectorAll(".scorepick").forEach(s=>{sc[s.dataset.c]+=+s.dataset.v;if(s.dataset.v==="4")first[s.dataset.c]++});
+let a=Object.keys(sc).map(k=>({k,v:sc[k],idx:(sc[k]-n)/(3*n)*100,f:first[k]})).sort((x,y)=>y.v-x.v||y.f-x.f),f=a[0],s=a[1],gap=f.v-s.v,range=a[0].v-a[3].v,c1=C[f.k],c2=C[s.k];
+let band,type,summary,emo;
+if(range<=TH.bal){band="均衡／情境切換型";emo="🟠🔵🟡🟢";type=`均衡／情境切換型（${c1.name}略高）`;summary=`最高色與最低色只差 ${range} 分，四種模式用得很平均，比較像依情境切換。這次結果不適合硬貼單一顏色，過一陣子再填一次，看看是否穩定。`}
+else if(gap<=TH.dual){band="雙主型";emo=c1.emo+c2.emo;type=`${c1.name}＋${c2.name}雙主型`;summary=`前兩色只差 ${gap} 分，你會依情境在這兩種風格之間切換，不適合硬分成單一顏色。`}
+else if(gap<=TH.sub){band="主副明顯";emo=c1.emo;type=`${c1.name}為主、${c2.name}為副`;summary=`主要色比第二色高 ${gap} 分，主副關係明顯：${c1.name}是你的預設反應，${c2.name}會在需要時補位。`}
+else{band="主要風格較突出";emo=c1.emo;type=`${c1.name}主導型`;summary=`主要色比第二色高 ${gap} 分，主要風格相當突出，多數情境你都會先用${c1.name}的方式反應。`}
+document.getElementById("headline").textContent=`${emo} ${type}`;
+document.getElementById("summary").textContent=summary;
+let box=document.getElementById("scores");box.innerHTML="";a.forEach(x=>{let c=C[x.k];box.innerHTML+=`<div class="score"><b>${c.emo} ${c.name}</b><div class="pct">${Math.round(x.idx)}</div><div class="small" style="margin:-2px 0 6px">偏好指數 0–100</div><div class="bar"><i style="width:${x.idx}%;background:${c.color}"></i></div><div class="small" style="margin-top:6px">${x.v} 分｜排第一 ${x.f} 次</div></div>`});
+document.getElementById("clarity").innerHTML=`<b>傾向強度：${band}</b><div style="margin:6px 0 8px">前兩色差 <b>${gap}</b> 分｜最高最低差 <b>${range}</b> 分｜「最像我」給了：${a.map(x=>`${C[x.k].emo} ${x.f} 次`).join("、")}</div><div class="small">判讀標準（${n} 題）：前兩色差 0–${TH.dual} 分＝雙主型；${TH.dual+1}–${TH.sub} 分＝主副明顯；${TH.sub+1} 分以上＝主要風格較突出。若最高最低差在 ${TH.bal} 分以內，不論前兩色差多少，都視為均衡／情境切換型。「排第一次數」是你把 4 分給該色的題數：四色平均使用時大約 9 次上下，有明顯傾向通常會超過 12 次。</div>`;
+document.getElementById("details").innerHTML=`<div class="panel"><h3>${c1.emo} 主要傾向｜${c1.title}</h3><p>${c1.desc}</p><b>壓力盲點</b><p>${c1.risk}</p></div><div class="panel"><h3>${c2.emo} 第二傾向｜${c2.title}</h3><p>${c2.desc}</p><p class="small">第二傾向會在不同情境下補充你的主要風格，完整互動方式請看下方的主副組合分析。</p></div><div class="panel"><h3>怎麼看偏好指數？</h3><p>0 代表每一題你都把該色排「最不像」，100 代表每一題都排「最像」，四色都在 50 左右就是平均使用。重點看四色相對高低、前兩色差距和上方的傾向強度，不要把它理解成「人格有幾 %」。</p></div><div class="panel"><h3>你的主副組合｜${COMBO[a[0].k+a[1].k][0]}</h3>
 <p><b>你的組合特色</b><br>${COMBO[a[0].k+a[1].k][1]}</p>
 <p><b>工作上的優勢</b><br>${COMBO[a[0].k+a[1].k][2]}</p>
 <p><b>容易卡住的地方</b><br>${COMBO[a[0].k+a[1].k][3]}</p>
 <p><b>別人怎麼跟你溝通比較有效</b><br>${COMBO[a[0].k+a[1].k][4]}</p></div>`;
-LAST={a,gap,type,cl,range,combo:COMBO[a[0].k+a[1].k],summary:document.getElementById("summary").textContent};
+LAST={a,gap,type,band,range,n,TH,combo:COMBO[a[0].k+a[1].k],summary};
 document.getElementById("result").style.display="block";document.getElementById("result").scrollIntoView({behavior:"smooth"})}
 function resetAll(){LAST=null;document.getElementById("toast").style.display="none";document.querySelectorAll(".scorepick").forEach(s=>s.dataset.v="");document.querySelectorAll(".pick").forEach(b=>b.classList.remove("active","taken"));document.querySelectorAll(".opt").forEach(o=>o.classList.remove("used"));document.querySelectorAll(".err").forEach(e=>e.style.display="none");document.getElementById("result").style.display="none";progress();window.scrollTo({top:0,behavior:"smooth"})}
 progress();
@@ -148,17 +154,17 @@ function buildResultImage(){
   text(LAST.type,P+96,y,`800 44px ${F}`,"#202833");
   y+=16;
   para(LAST.summary,`26px ${F}`,"#53616c",38);
-  y+=40;
+  y+=44;text("偏好指數 0–100（每題都排最不像＝0，每題都排最像＝100，平均使用＝50）",P,y,`22px ${F}`,"#98a3ab");y+=22;
   LAST.a.forEach(x=>{const c=C[x.k];
    dot(P+14,y+14,14,c.color);
    text(c.name+"｜"+c.title,P+44,y+24,`700 28px ${F}`,"#202833");
-   text(x.p.toFixed(1)+"%",W-P,y+24,`800 30px ${F}`,"#202833","right");
-   text(x.v+" 分",W-P-130,y+24,`24px ${F}`,"#687481","right");
+   text(String(Math.round(x.idx)),W-P,y+24,`800 30px ${F}`,"#202833","right");
+   text(x.v+" 分｜排第一 "+x.f+" 次",W-P-80,y+24,`24px ${F}`,"#687481","right");
    const bx=P+44,bw=cw-44,by=y+40;
-   if(paint){ctx.fillStyle="#edf0f2";rr(ctx,bx,by,bw,14,7);ctx.fill();ctx.fillStyle=c.color;rr(ctx,bx,by,Math.max(14,bw*x.p/100),14,7);ctx.fill()}
+   if(paint){ctx.fillStyle="#edf0f2";rr(ctx,bx,by,bw,14,7);ctx.fill();ctx.fillStyle=c.color;rr(ctx,bx,by,Math.max(14,bw*x.idx/100),14,7);ctx.fill()}
    y+=80});
   y+=20;
-  text(`結果辨識度：${LAST.cl}　最高色與最低色相差 ${LAST.range} 分`,P,y,`26px ${F}`,"#53616c");
+  text(`傾向強度：${LAST.band}　前兩色差 ${LAST.gap} 分｜最高最低差 ${LAST.range} 分`,P,y,`26px ${F}`,"#53616c");
   y+=40;if(paint){ctx.fillStyle="#e2e7ea";ctx.fillRect(P,y,cw,2)}
   y+=30;text("你的主副組合",P,y+24,`600 22px ${F}`,"#687481");y+=34;
   para(combo[0],`800 36px ${F}`,"#304a59",48);
