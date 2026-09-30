@@ -21,6 +21,12 @@ h1{margin:5px 0 8px;font-size:32px}.hero p{margin:0;color:#eaf0f3}.chips{display
 .result{display:none;padding:25px;margin-top:20px}.center{text-align:center}.scores{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}.score{border:1px solid var(--line);border-radius:14px;padding:14px}.pct{font-size:27px;font-weight:850}.bar{height:7px;background:#edf0f2;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%}
 .resultGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.panel{border:1px solid var(--line);border-radius:14px;padding:15px}.panel h3{margin:0 0 7px}.small{font-size:12px;color:var(--muted)}.clarity{margin:16px 0;padding:14px;border-radius:13px;background:#f7f9fa;border:1px solid var(--line)}
 @media(max-width:700px){.opt{grid-template-columns:1fr}.scores,.resultGrid{grid-template-columns:1fr 1fr}h1{font-size:27px}}@media(max-width:460px){.scores,.resultGrid{grid-template-columns:1fr}}
+.savebar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:20px;padding-top:18px;border-top:1px dashed var(--line)}
+.savebar input{border:1px solid #cfd7dc;border-radius:12px;padding:12px 14px;font-size:15px;font-family:inherit;flex:1 1 200px;max-width:320px;color:var(--ink);background:#fff}
+.savebar input:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:var(--navy)}
+.savebar .primary{margin:0;white-space:nowrap}.savebar .primary:disabled{opacity:.6;cursor:wait}
+.toast{display:none;text-align:center;font-size:13px;color:#2f7d5a;background:#eef8f2;border:1px solid #cfe8d8;border-radius:10px;padding:8px 12px;margin-top:10px}
+button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 </style></head>
 <body><div class="wrap">
 <header class="hero"><div style="font-size:12px;letter-spacing:.15em;opacity:.7">TEAM COMMUNICATION SELF-ASSESSMENT</div>
@@ -32,7 +38,7 @@ h1{margin:5px 0 8px;font-size:32px}.hero p{margin:0;color:#eaf0f3}.chips{display
 <div class="sticky"><div class="prow"><span>完成進度</span><span id="pt">0 / 20</span></div><div class="track"><div class="fill" id="pf"></div></div></div>
 <div id="questions"></div>
 <div class="actions"><button class="primary" onclick="calc()">查看我的四色結果</button><button class="secondary" onclick="resetAll()">重新作答</button></div>
-<section class="result" id="result"><div class="center"><div class="small">YOUR RESULT</div><h2 id="headline"></h2><p id="summary"></p></div><div class="scores" id="scores"></div><div class="clarity" id="clarity"></div><div class="resultGrid" id="details"></div><div class="panel" style="margin-top:18px"><h3>🎨 各色溝通 Tips｜遇到不同風格的人，可以怎麼說？</h3>
+<section class="result" id="result"><div class="center"><div class="small">YOUR RESULT</div><h2 id="headline"></h2><p id="summary"></p></div><div class="scores" id="scores"></div><div class="savebar"><input id="who" type="text" maxlength="20" placeholder="你的名字（選填，會印在圖片上）" autocomplete="name"><button type="button" class="primary" id="saveBtn" onclick="saveResult()">儲存結果圖片</button></div><div class="toast" id="toast" role="status"></div><div class="clarity" id="clarity"></div><div class="resultGrid" id="details"></div><div class="panel" style="margin-top:18px"><h3>🎨 各色溝通 Tips｜遇到不同風格的人，可以怎麼說？</h3>
 <p class="small">不是把人貼標籤，而是依照對方比較習慣接收資訊的方式，調整你說話的順序。</p>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px">
 <div style="border:1px solid #f1c9a5;border-radius:14px;padding:16px"><h3 style="margin-top:0">🟠 行動型｜先講重點</h3><p><b>他在意：</b>結果、速度、下一步</p><p><b>怎麼說：</b>先講結論，再講要他決定或處理什麼。</p><p><b>可以這樣講：</b>「目前有 A、B 兩個方案，我建議 A，今天確認就能往下做。」</p><p><b>避免：</b>背景講很久，最後還不知道要做什麼。</p></div>
@@ -112,7 +118,81 @@ document.getElementById("details").innerHTML=`<div class="panel"><h3>${c1.emo} �
 <p><b>工作上的優勢</b><br>${COMBO[a[0].k+a[1].k][2]}</p>
 <p><b>容易卡住的地方</b><br>${COMBO[a[0].k+a[1].k][3]}</p>
 <p><b>別人怎麼跟你溝通比較有效</b><br>${COMBO[a[0].k+a[1].k][4]}</p></div>`;
+LAST={a,gap,type,cl,range,combo:COMBO[a[0].k+a[1].k],summary:document.getElementById("summary").textContent};
 document.getElementById("result").style.display="block";document.getElementById("result").scrollIntoView({behavior:"smooth"})}
-function resetAll(){document.querySelectorAll(".scorepick").forEach(s=>s.dataset.v="");document.querySelectorAll(".pick").forEach(b=>b.classList.remove("active","taken"));document.querySelectorAll(".opt").forEach(o=>o.classList.remove("used"));document.querySelectorAll(".err").forEach(e=>e.style.display="none");document.getElementById("result").style.display="none";progress();window.scrollTo({top:0,behavior:"smooth"})}
+function resetAll(){LAST=null;document.getElementById("toast").style.display="none";document.querySelectorAll(".scorepick").forEach(s=>s.dataset.v="");document.querySelectorAll(".pick").forEach(b=>b.classList.remove("active","taken"));document.querySelectorAll(".opt").forEach(o=>o.classList.remove("used"));document.querySelectorAll(".err").forEach(e=>e.style.display="none");document.getElementById("result").style.display="none";progress();window.scrollTo({top:0,behavior:"smooth"})}
 progress();
+/* ===== 儲存結果圖片 ===== */
+let LAST=null;
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);toast._t=setTimeout(()=>t.style.display="none",6000)}
+function wrapText(ctx,str,maxW){const out=[],tail="。，、；：！？」』）%";let line="";for(const ch of str){const t=line+ch;if(line&&ctx.measureText(t).width>maxW&&!tail.includes(ch)){out.push(line);line=ch}else line=t}if(line)out.push(line);return out}
+function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function buildResultImage(){
+ const W=1080,P=64,cw=W-P*2,F='"PingFang TC","Noto Sans TC","Microsoft JhengHei","Segoe UI",sans-serif';
+ const name=document.getElementById("who").value.trim();
+ const date=new Date().toLocaleDateString("zh-TW",{year:"numeric",month:"long",day:"numeric"});
+ const c1=C[LAST.a[0].k],c2=C[LAST.a[1].k],combo=LAST.combo;
+ const cv=document.createElement("canvas");let ctx=cv.getContext("2d");
+ function run(paint){
+  let y=0;
+  const text=(str,x,yy,font,color,align)=>{if(!paint)return;ctx.font=font;ctx.fillStyle=color;ctx.textAlign=align||"left";ctx.textBaseline="alphabetic";ctx.fillText(str,x,yy)};
+  const para=(str,font,color,lh,maxW)=>{ctx.font=font;const ls=wrapText(ctx,str,maxW||cw);ls.forEach(l=>{y+=lh;text(l,P,y,font,color)})};
+  const dot=(x,yy,r,color)=>{if(!paint)return;ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,yy,r,0,Math.PI*2);ctx.fill()};
+  if(paint){ctx.fillStyle="#304a59";ctx.fillRect(0,0,W,168);["O","B","Y","G"].forEach((k,i)=>{ctx.fillStyle=C[k].color;ctx.fillRect(i*W/4,168,W/4,10)})}
+  text("TEAM COMMUNICATION SELF-ASSESSMENT",P,64,`600 18px ${F}`,"rgba(255,255,255,.7)");
+  text("職場溝通風格探索",P,124,`800 44px ${F}`,"#ffffff");
+  y=178+64;
+  text((name?name+"　":"")+date,P,y,`26px ${F}`,"#687481");
+  y+=72;
+  dot(P+18,y-14,18,c1.color);dot(P+58,y-14,18,c2.color);
+  text(LAST.type,P+96,y,`800 44px ${F}`,"#202833");
+  y+=16;
+  para(LAST.summary,`26px ${F}`,"#53616c",38);
+  y+=40;
+  LAST.a.forEach(x=>{const c=C[x.k];
+   dot(P+14,y+14,14,c.color);
+   text(c.name+"｜"+c.title,P+44,y+24,`700 28px ${F}`,"#202833");
+   text(x.p.toFixed(1)+"%",W-P,y+24,`800 30px ${F}`,"#202833","right");
+   text(x.v+" 分",W-P-130,y+24,`24px ${F}`,"#687481","right");
+   const bx=P+44,bw=cw-44,by=y+40;
+   if(paint){ctx.fillStyle="#edf0f2";rr(ctx,bx,by,bw,14,7);ctx.fill();ctx.fillStyle=c.color;rr(ctx,bx,by,Math.max(14,bw*x.p/100),14,7);ctx.fill()}
+   y+=80});
+  y+=20;
+  text(`結果辨識度：${LAST.cl}　最高色與最低色相差 ${LAST.range} 分`,P,y,`26px ${F}`,"#53616c");
+  y+=40;if(paint){ctx.fillStyle="#e2e7ea";ctx.fillRect(P,y,cw,2)}
+  y+=30;text("你的主副組合",P,y+24,`600 22px ${F}`,"#687481");y+=34;
+  para(combo[0],`800 36px ${F}`,"#304a59",48);
+  [["你的組合特色",combo[1]],["工作上的優勢",combo[2]],["容易卡住的地方",combo[3]],["別人怎麼跟你溝通比較有效",combo[4]]].forEach(([h,t])=>{
+   y+=36;text(h,P,y+28,`700 27px ${F}`,"#202833");y+=30;
+   para(t,`26px ${F}`,"#3b4650",40)});
+  y+=60;
+  text("依課程四色溝通框架設計，用於團隊自我覺察與討論，非標準化心理量表。",P,y,`20px ${F}`,"#98a3ab");
+  return y+P;
+ }
+ const H=run(false),S=2;
+ cv.width=W*S;cv.height=H*S;ctx=cv.getContext("2d");ctx.scale(S,S);
+ ctx.fillStyle="#ffffff";ctx.fillRect(0,0,W,H);
+ run(true);
+ return cv;
+}
+function canvasToBlob(cv){const b=atob(cv.toDataURL("image/png").split(",")[1]),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return new Blob([u],{type:"image/png"})}
+async function saveResult(){
+ if(!LAST){calc();if(!LAST)return}
+ const btn=document.getElementById("saveBtn"),label="儲存結果圖片";
+ btn.disabled=true;btn.textContent="產生圖片中…";
+ try{
+  const cv=buildResultImage(),blob=canvasToBlob(cv);
+  const name=document.getElementById("who").value.trim(),d=new Date();
+  const fname=`溝通風格結果_${name||"我"}_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,"0")}${String(d.getDate()).padStart(2,"0")}.png`;
+  const ua=navigator.userAgent,mobile=/Android|iPhone|iPad|iPod/i.test(ua)||(navigator.maxTouchPoints>1&&/Mac/.test(ua));
+  const file=new File([blob],fname,{type:"image/png"});
+  btn.disabled=false;btn.textContent=label;
+  if(mobile&&navigator.canShare&&navigator.canShare({files:[file]})){
+   try{await navigator.share({files:[file],title:"職場溝通風格探索結果"});toast("已開啟分享選單：可選「儲存影像」存到相簿，或直接傳給同事。");return}
+   catch(e){if(e&&e.name==="AbortError")return}
+  }
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=fname;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+  toast("圖片已下載："+fname);
+ }catch(e){btn.disabled=false;btn.textContent=label;toast("圖片產生失敗，請再試一次。"+(e&&e.message?"（"+e.message+"）":""))}
+}
 </script></body></html>
