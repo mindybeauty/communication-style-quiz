@@ -107,7 +107,7 @@ const COMBO={
 };
 function calc(){for(let i=0;i<Q.length;i++){if(!valid(i,true)){document.getElementById("q"+i).scrollIntoView({behavior:"smooth",block:"center"});return}}
 const n=Q.length,K=n/20;
-const TH={dual:Math.round(3*K),sub:Math.round(7*K),bal:Math.round(13*K)}; // 以 20 題為基準（雙主≤3、主副≤7、均衡≤13），依題數等比換算；25 題→4、9、16
+const TH={dual:Math.round(3*K),sub:Math.round(11*K),bal:Math.round(13*K)}; // 以 20 題為基準（雙主≤3、主副≤11、均衡≤13），依題數等比換算；25 題→4、14、16
 let sc={O:0,B:0,Y:0,G:0},first={O:0,B:0,Y:0,G:0};document.querySelectorAll(".scorepick").forEach(s=>{sc[s.dataset.c]+=+s.dataset.v;if(s.dataset.v==="4")first[s.dataset.c]++});
 let a=Object.keys(sc).map(k=>({k,v:sc[k],idx:(sc[k]-n)/(3*n)*100,f:first[k]})).sort((x,y)=>y.v-x.v||y.f-x.f),f=a[0],s=a[1],gap=f.v-s.v,range=a[0].v-a[3].v,c1=C[f.k],c2=C[s.k];
 let band,type,summary,emo;
